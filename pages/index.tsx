@@ -62,7 +62,11 @@ export default function Home() {
       observer.observe(loader.current);
     }
 
-    return () => observer.unobserve(loader.current);
+    return () => {
+      if (loader.current) {
+        observer.unobserve(loader.current);
+      }
+    };
   }, [loader, loadMore]);
 
   if (error) {
