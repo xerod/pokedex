@@ -13,14 +13,13 @@ import { gql, useQuery } from "@apollo/client";
 import typeColor from "utils/typeColor";
 
 type IPokemonCardProps = {
-  id: number;
-  image: string;
   name: string;
 };
 
 const GET_POKEMON_DETAIL = gql`
   query getPokemonDetail($name: String!) {
     pokemon(name: $name) {
+      id
       name
       types {
         type {
@@ -64,6 +63,7 @@ export default function PokemonCard(props: IPokemonCardProps) {
   }
 
   const typeColorName = typeColor[data.pokemon.types[0].type.name];
+  const pokemon = data.pokemon;
   return (
     <Box
       h="full"
@@ -87,7 +87,7 @@ export default function PokemonCard(props: IPokemonCardProps) {
         WebkitTransition: "box-shadow 250ms, transform 200ms",
         transition: "box-shadow 250ms, transform 200ms",
       }}
-      onClick={() => router.push(`/pokemon/${props.name}`)}
+      onClick={() => router.push(`/pokemon/${pokemon.name}`)}
     >
       <Flex
         inset="0"
@@ -96,7 +96,7 @@ export default function PokemonCard(props: IPokemonCardProps) {
         alignItems="flex-end"
       >
         <Image
-          src={`${imageURL}${props.id}.png`}
+          src={`${imageURL}${pokemon.id}.png`}
           opacity={{ base: "0.3", md: "0.2", lg: "1" }}
           boxSize={{ base: "40", lg: "28" }}
           objectFit="cover"
@@ -110,7 +110,7 @@ export default function PokemonCard(props: IPokemonCardProps) {
           color={`${typeColorName}.50`}
           textTransform="capitalize"
         >
-          {props.name.split("-")[0]}
+          {pokemon.name.split("-")[0]}
         </Text>
         <Text
           mb={10}
@@ -118,7 +118,7 @@ export default function PokemonCard(props: IPokemonCardProps) {
           fontWeight="bold"
           color={`${typeColorName}.400`}
         >
-          #{formatPokemonID(props.id.toString())}
+          #{formatPokemonID(pokemon.id.toString())}
         </Text>
         {data.pokemon.types.map((type) => (
           <Tag

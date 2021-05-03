@@ -97,11 +97,7 @@ export default function Home() {
           >
             {listItem.map((pokemon) => (
               <GridItem colSpan={{ base: 2, md: 1 }} key={pokemon.name}>
-                <PokemonCard
-                  id={pokemon.id}
-                  name={pokemon.name}
-                  image={pokemon.image}
-                />
+                <PokemonCard name={pokemon.name} />
               </GridItem>
             ))}
           </Grid>
