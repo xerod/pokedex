@@ -1,7 +1,7 @@
 import {
   Flex,
   Box,
-  Image,
+  // Image,
   Text,
   Skeleton,
   Tag,
@@ -11,7 +11,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { gql, useQuery } from "@apollo/client";
 import typeColor from "utils/typeColor";
-
+import Image from "next/image";
 type IPokemonCardProps = {
   name: string;
   alias?: string;
@@ -63,6 +63,12 @@ export default function PokemonCard(props: IPokemonCardProps) {
     return null;
   }
 
+  const myLoader = ({ src, width, quality }) => {
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${src}?w=${width}&q=${
+      quality || 50
+    }`;
+  };
+
   const typeColorName = typeColor[data.pokemon.types[0].type.name];
   const pokemon = data.pokemon;
   return (
@@ -97,9 +103,14 @@ export default function PokemonCard(props: IPokemonCardProps) {
         alignItems="flex-end"
       >
         <Image
-          src={`${imageURL}${pokemon.id}.png`}
-          opacity={{ base: "0.3", md: "0.2", lg: "1" }}
-          boxSize={{ base: "40", lg: "28" }}
+          loader={myLoader}
+          // src={`${imageURL}${pokemon.id}.png`}
+          src={`${pokemon.id}.png`}
+          // opacity={{ base: "0.3", md: "0.2", lg: "1" }}
+          // boxSize={{ base: "40", lg: "28" }}
+          layout="intrinsic"
+          width={120}
+          height={120}
           objectFit="cover"
         />
       </Flex>
