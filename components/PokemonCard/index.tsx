@@ -14,6 +14,7 @@ import typeColor from "utils/typeColor";
 
 type IPokemonCardProps = {
   name: string;
+  alias?: string;
 };
 
 const GET_POKEMON_DETAIL = gql`
@@ -110,7 +111,7 @@ export default function PokemonCard(props: IPokemonCardProps) {
           color={`${typeColorName}.50`}
           textTransform="capitalize"
         >
-          {pokemon.name.split("-")[0]}
+          {props.alias ? props.alias : pokemon.name.split("-")[0]}
         </Text>
         <Text
           mb={10}
