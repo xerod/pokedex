@@ -1,34 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This project is part of assinment for Tokopedia - Web Platform Engineers.
 
-## Getting Started
+# Pokédex
 
-First, run the development server:
+This project use graphql-pokeapi that show Pokemon list and Pokemon details. I'm using `window.localStorage` Web API to persist data on the browser.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### Pokemon List Page
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Show a **list of Pokemons’** names and the **o​wned total**.​ When a Pokemon is clicked, it'll redirect you to `Pokemon Detail page`.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### Pokemon Detail Page
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+Show a picture of th`Pokemon with its moves and types. You can **catch the Pokemon​** with 50% success probability, if success then you can g​ive the Pokemon a nickname​ and add that Pokemon to`My Pokemon List`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+You can catch the same pokemon multiple times but **need to give a​ different nickname​** for each pokemon.
 
-## Learn More
+### My Pokemon List Page
 
-To learn more about Next.js, take a look at the following resources:
+Show a list of all P​okemons you have caught.​ You could ​remove/release​ a Pokemon from the list on this page. The pokemons in this list p​ersist​ even after a full page reload.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Resource
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+[NextJS Docs](https://nextjs.org/docs)
 
-## Deploy on Vercel
+[ChakraUI Docs](https://chakra-ui.com/docs)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+[Apollo Client React Docs](https://www.apollographql.com/docs/react/)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[GraphQL for PokeAPI Docs](https://graphql-pokeapi.vercel.app/)
