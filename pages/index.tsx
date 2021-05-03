@@ -75,35 +75,37 @@ export default function Home() {
 
   return (
     <DefaultLayout>
-      <Text fontSize="4xl" fontWeight="bold" mb="4">
-        Pokédex
-      </Text>
-      <Grid
-        templateColumns={{
-          base: "repeat(2, minmax(0, 1fr))",
-          md: "repeat(3, minmax(0, 1fr))",
-          lg: "repeat(5, minmax(0, 1fr))",
-        }}
-        gap={3}
-        mb={6}
-      >
-        {listItem.map((pokemon) => (
-          <GridItem colSpan={{ base: 2, md: 1 }} key={pokemon.name}>
-            <PokemonCard name={pokemon.name} />
-          </GridItem>
-        ))}
-      </Grid>
+      <Box p="4">
+        <Text fontSize="4xl" fontWeight="bold" mb="4">
+          Pokédex
+        </Text>
+        <Grid
+          templateColumns={{
+            base: "repeat(2, minmax(0, 1fr))",
+            md: "repeat(3, minmax(0, 1fr))",
+            lg: "repeat(3, minmax(0, 1fr))",
+          }}
+          gap={3}
+          mb={6}
+        >
+          {listItem.map((pokemon) => (
+            <GridItem colSpan={{ base: 2, md: 1 }} key={pokemon.name}>
+              <PokemonCard name={pokemon.name} />
+            </GridItem>
+          ))}
+        </Grid>
 
-      <Flex
-        ref={loader}
-        h="70px"
-        w="full"
-        justifyContent="center"
-        alignItems="center"
-      >
-        {loading && <Spinner size="lg" speed="0.5s" />}
-      </Flex>
-      {noData && <Text textAlign="center">There's no data anymore ...</Text>}
+        <Flex
+          ref={loader}
+          h="70px"
+          w="full"
+          justifyContent="center"
+          alignItems="center"
+        >
+          {loading && <Spinner size="lg" speed="0.5s" />}
+        </Flex>
+        {noData && <Text textAlign="center">There's no data anymore ...</Text>}
+      </Box>
     </DefaultLayout>
   );
 }

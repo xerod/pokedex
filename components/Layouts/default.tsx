@@ -1,14 +1,23 @@
 import { Flex, Box } from "@chakra-ui/layout";
 import ClientOnly from "components/ClientOnly";
 
-export default function DefaultLayout({ children }) {
+type ILayoutProps = {
+  bg?: string;
+  children: React.ReactNode;
+};
+
+const DefaultLayout: React.FC<ILayoutProps> = ({ bg, children }) => {
   return (
     <ClientOnly>
-      <Flex bg="gray.50" justifyContent="center" minH="100vh">
+      <Flex
+        bg={bg ? bg : "gray.50"}
+        justifyContent="center"
+        minH="100vh"
+        overflow="hidden"
+      >
         <Box
           pt="4"
-          px={{ base: 4 }}
-          maxW={{ base: "xs", sm: "md", md: "xl", lg: "5xl" }}
+          maxW={{ base: "full", sm: "md", md: "xl", lg: "2xl" }}
           w="full"
           mb="20"
         >
@@ -17,4 +26,6 @@ export default function DefaultLayout({ children }) {
       </Flex>
     </ClientOnly>
   );
-}
+};
+
+export default DefaultLayout;
