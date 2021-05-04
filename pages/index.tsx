@@ -38,7 +38,7 @@ export default function Home() {
   });
 
   useEffect(() => {
-    setMyPokemon(JSON.parse(localStorage.getItem("my-pokemon-list")));
+    setMyPokemon(JSON.parse(localStorage.getItem("my-pokemon-list") || "[]"));
 
     if (!loading && data) {
       setListItem((prevState) => [...prevState, ...data.pokemons.results]);
@@ -95,10 +95,15 @@ export default function Home() {
           </Text>
           <NextLink href="/pokemon">
             <Button colorScheme="indigo" variant="ghost">
-              <Text mr="1" fontWeight="medium">
-                My Pokemon
-              </Text>
-              <Tag variant="outline" colorScheme="indigo">
+              My Pokemon
+              <Tag
+                ml="1"
+                px="2"
+                borderRadius="full"
+                size="sm"
+                variant="solid"
+                colorScheme="red"
+              >
                 {myPokemon.length}
               </Tag>
             </Button>
