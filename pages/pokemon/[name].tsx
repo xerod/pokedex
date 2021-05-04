@@ -11,28 +11,23 @@ import {
   TabPanel,
   Tag,
   TagLabel,
-  Grid,
-  GridItem,
-  Progress,
-  Image,
-  chakra,
-  useTab,
-  useStyles,
 } from "@chakra-ui/react";
 import { useQuery, gql } from "@apollo/client";
 import DefaultLayout from "components/Layouts/default";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import typeColor from "utils/typeColor";
 import {
-  HiChartBar,
-  HiInformationCircle,
-  HiLightningBolt,
+  HiChevronLeft,
   HiOutlineChartBar,
   HiOutlineInformationCircle,
   HiOutlineLightningBolt,
 } from "react-icons/hi";
 import React from "react";
+import AbilityPanel from "components/PokemonDetail/AbilityPanel";
+import StatsPanel from "components/PokemonDetail/StatsPanel";
+import AboutPanel from "components/PokemonDetail/AboutPanel";
+import Image from "next/image";
 
 const GET_POKEMON_DETAIL = gql`
   query pokemon($name: String!) {
@@ -42,15 +37,10 @@ const GET_POKEMON_DETAIL = gql`
       status
       weight
       height
-      base_experience
-      location_area_encounters
-      order
-      species {
-        url
-        name
-      }
-      sprites {
-        front_default
+      game_indices {
+        version {
+          name
+        }
       }
       abilities {
         ability {
@@ -59,13 +49,7 @@ const GET_POKEMON_DETAIL = gql`
       }
       stats {
         base_stat
-        effort
         stat {
-          name
-        }
-      }
-      moves {
-        move {
           name
         }
       }
@@ -83,8 +67,11 @@ const PokemonDetail: React.FC = () => {
   const [myPokemon, setMyPokemon] = useState([]);
   const [isCatched, setIsCatched] = useState(false);
 
-  const imageURL =
-    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
+  const myLoader = ({ src, width, quality }) => {
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${src}?w=${width}&q=${
+      quality || 50
+    }`;
+  };
 
   const { data, loading, error } = useQuery(GET_POKEMON_DETAIL, {
     variables: { name: router.query.name },
@@ -142,9 +129,20 @@ const PokemonDetail: React.FC = () => {
   };
 
   const typeColorName = typeColor[data.pokemon.types[0].type.name];
+
   return (
     <DefaultLayout bg={`${typeColorName}.600`}>
-      <Box mx="10">
+      <Flex alignItems="center" color={`${typeColorName}.400`}>
+        <Button
+          variant="link"
+          fontWeight="semibold"
+          colorScheme={typeColorName}
+          onClick={() => router.push("/")}
+        >
+          <HiChevronLeft size={24} /> Home
+        </Button>
+      </Flex>
+      <Box mx="10" mt="6">
         <Flex justifyContent="space-between" alignItems="center">
           <Text
             fontSize="4xl"
@@ -163,6 +161,7 @@ const PokemonDetail: React.FC = () => {
             #{pokemon.id}
           </Text>
         </Flex>
+
         {pokemon.types.map((type) => (
           <Tag
             key={type.type.name}
@@ -176,13 +175,16 @@ const PokemonDetail: React.FC = () => {
           </Tag>
         ))}
 
-        <Image
-          mx="auto"
-          src={`${imageURL}${pokemon.id}.png`}
-          boxSize={{ base: "40", lg: "60" }}
-          objectFit="cover"
-        />
-        {/* <Button onClick={() => catchPokemon(pokemon)}>Catch</Button> */}
+        <Flex w="full" justifyContent="center">
+          <Image
+            loader={myLoader}
+            src={`${pokemon.id}.png`}
+            layout="intrinsic"
+            width={200}
+            height={200}
+            objectFit="cover"
+          />
+        </Flex>
       </Box>
       <Box
         mt={-12}
@@ -195,6 +197,7 @@ const PokemonDetail: React.FC = () => {
         <Tabs
           bg="white"
           size="sm"
+          isLazy={true}
           isFitted={true}
           variant="soft-rounded"
           colorScheme={typeColorName}
@@ -215,100 +218,47 @@ const PokemonDetail: React.FC = () => {
             </Tab>
             <Tab color="gray.600" bg="gray.100" mr="3">
               <HiOutlineLightningBolt />
-              <Text ml="1">Move</Text>
+              <Text ml="1">Ability</Text>
             </Tab>
           </TabList>
+
           <TabPanels>
             <TabPanel fontWeight="medium">
-              <Grid
-                maxW={{ base: "3xs" }}
-                templateColumns="repeat(2, minmax(0, 1fr))"
-                rowGap={4}
-              >
-                <GridItem>
-                  <Text color="gray.400" mr="20" w="full">
-                    Height
-                  </Text>
-                </GridItem>
-
-                <GridItem>
-                  <Text>{pokemon.height / 10} m</Text>
-                </GridItem>
-
-                <GridItem>
-                  <Text color="gray.400" mr="20" w="full">
-                    Weight
-                  </Text>
-                </GridItem>
-
-                <GridItem>
-                  <Text>{pokemon.weight / 10} kg</Text>
-                </GridItem>
-
-                <GridItem>
-                  <Text color="gray.400" mr="20" w="full">
-                    Species
-                  </Text>
-                </GridItem>
-
-                <GridItem>
-                  <Text>{pokemon.species.name}</Text>
-                </GridItem>
-
-                <GridItem>
-                  <Text color="gray.400" mr="20" w="full">
-                    Abilities
-                  </Text>
-                </GridItem>
-
-                <GridItem>
-                  {pokemon.abilities.map((data) => (
-                    <Tag key={data.ability.name} size="sm" mr="1">
-                      <TagLabel textTransform="capitalize">
-                        {data.ability.name}
-                      </TagLabel>
-                    </Tag>
-                  ))}
-                </GridItem>
-              </Grid>
+              <AboutPanel
+                weight={pokemon.weight}
+                height={pokemon.height}
+                game={pokemon.game_indices}
+              />
             </TabPanel>
             <TabPanel>
-              <Grid
-                templateColumns={{
-                  base: "repeat(1, minmax(0, 1fr))",
-                  md: "repeat(2, minmax(0, 1fr))",
-                }}
-                columnGap={12}
-                rowGap={4}
-              >
-                {pokemon.stats.map((data) => (
-                  <Box key={data.stat.name}>
-                    <Flex alignItems="center">
-                      <Text textTransform="capitalize" fontWeight="medium">
-                        {data.stat.name}
-                      </Text>
-                      <Text ml="1" fontSize="xs" color="gray.400">
-                        {data.base_stat}
-                      </Text>
-                    </Flex>
-                    <Progress
-                      size="sm"
-                      mt="2"
-                      borderRadius="full"
-                      max={200}
-                      value={data.base_stat}
-                      colorScheme={typeColorName}
-                    />
-                  </Box>
-                ))}
-              </Grid>
+              <StatsPanel stats={pokemon.stats} color={typeColorName} />
             </TabPanel>
             <TabPanel>
-              <p>four!</p>
+              {pokemon.abilities.map((data) => (
+                <AbilityPanel
+                  key={data.ability.name}
+                  ability={data.ability.name}
+                />
+              ))}
             </TabPanel>
           </TabPanels>
         </Tabs>
       </Box>
+
+      <Button
+        position="fixed"
+        bottom="0"
+        insetX="0"
+        mx="auto"
+        mb="4"
+        shadow="2xl"
+        size="md"
+        colorScheme="indigo"
+        borderRadius="lg"
+        onClick={() => catchPokemon(pokemon)}
+      >
+        Catch {pokemon.name}!
+      </Button>
     </DefaultLayout>
   );
 };
