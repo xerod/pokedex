@@ -1,8 +1,18 @@
-import { Text, Box, Flex, Grid, GridItem, Spinner } from "@chakra-ui/react";
+import {
+  Text,
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  Spinner,
+  Tag,
+  Button,
+} from "@chakra-ui/react";
 import { useQuery, gql } from "@apollo/client";
 import DefaultLayout from "components/Layouts/default";
 import PokemonCard from "components/PokemonCard";
 import { useCallback, useEffect, useRef, useState } from "react";
+import NextLink from "next/link";
 
 const GET_POKEMONS = gql`
   query PokemonList($limit: Int, $offset: Int) {
@@ -21,12 +31,15 @@ export default function Home() {
   const [offset, setOffset] = useState(0);
   const [listItem, setListItem] = useState([]);
   const [noData, setNoData] = useState(false);
+  const [myPokemon, setMyPokemon] = useState([]);
 
   const { data, loading, error } = useQuery(GET_POKEMONS, {
     variables: { limit: limit, offset: offset },
   });
 
   useEffect(() => {
+    setMyPokemon(JSON.parse(localStorage.getItem("my-pokemon-list")));
+
     if (!loading && data) {
       setListItem((prevState) => [...prevState, ...data.pokemons.results]);
       if (data.pokemons.results.length === 0) {
@@ -76,9 +89,21 @@ export default function Home() {
   return (
     <DefaultLayout>
       <Box p="4">
-        <Text fontSize="4xl" fontWeight="bold" mb="4">
-          Pokédex
-        </Text>
+        <Flex justifyContent="space-between" alignItems="center" mb="4">
+          <Text fontSize="4xl" fontWeight="bold">
+            Pokédex
+          </Text>
+          <NextLink href="/pokemon">
+            <Button colorScheme="indigo" variant="ghost">
+              <Text mr="1" fontWeight="medium">
+                My Pokemon
+              </Text>
+              <Tag variant="outline" colorScheme="indigo">
+                {myPokemon.length}
+              </Tag>
+            </Button>
+          </NextLink>
+        </Flex>
         <Grid
           templateColumns={{
             base: "repeat(2, minmax(0, 1fr))",

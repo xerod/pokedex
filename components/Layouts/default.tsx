@@ -8,21 +8,23 @@ type ILayoutProps = {
 
 const DefaultLayout: React.FC<ILayoutProps> = ({ bg, children }) => {
   return (
-    <Flex
-      bg={bg ? bg : "gray.50"}
-      justifyContent="center"
-      minH="100vh"
-      overflow="hidden"
-    >
-      <Box
-        pt="4"
-        maxW={{ base: "full", sm: "md", md: "xl", lg: "2xl" }}
-        w="full"
-        mb="20"
+    <ClientOnly>
+      <Flex
+        bg={bg ? bg : "gray.50"}
+        justifyContent="center"
+        minH="100vh"
+        overflow="hidden"
       >
-        {children}
-      </Box>
-    </Flex>
+        <Box
+          pt="4"
+          maxW={{ base: "full", sm: "md", md: "xl", lg: "2xl" }}
+          w="full"
+          mb="20"
+        >
+          {children}
+        </Box>
+      </Flex>
+    </ClientOnly>
   );
 };
 
