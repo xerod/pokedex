@@ -11,7 +11,7 @@ const typeColor = {
   fire: "amber",
   water: "blue",
   grass: "emerald",
-  electric: "lime",
+  electric: "yellow",
   psychic: "pink",
   ice: "lightBlue",
   dragon: "red",
