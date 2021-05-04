@@ -1,17 +1,11 @@
-import {
-  Flex,
-  Box,
-  // Image,
-  Text,
-  Skeleton,
-  Tag,
-  TagLabel,
-} from "@chakra-ui/react";
+import { Flex, Box, Text, Skeleton, Tag, TagLabel } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { gql, useQuery } from "@apollo/client";
 import typeColor from "utils/typeColor";
 import Image from "next/image";
+import NextLink from "next/link";
+
 type IPokemonCardProps = {
   name: string;
   alias?: string;
@@ -72,79 +66,80 @@ export default function PokemonCard(props: IPokemonCardProps) {
   const typeColorName = typeColor[data.pokemon.types[0].type.name];
   const pokemon = data.pokemon;
   return (
-    <Box
-      h="full"
-      px="4"
-      py="3"
-      bgColor={`${typeColorName}.600`}
-      rounded="xl"
-      cursor="pointer"
-      shadow="base"
-      position="relative"
-      overflow="hidden"
-      _hover={{
-        boxShadow: "xl",
-        transform: "translateY(-2px)",
-      }}
-      _focus={{
-        boxShadow: "outline",
-        transform: "translateY(-2px)",
-      }}
-      style={{
-        WebkitTransition: "box-shadow 250ms, transform 200ms",
-        transition: "box-shadow 250ms, transform 200ms",
-      }}
-      onClick={() => router.push(`/pokemon/${pokemon.name}`)}
+    <NextLink
+      href={`/pokemon/${encodeURIComponent(pokemon.name)}`}
+      prefetch={false}
     >
-      <Flex
-        inset="0"
-        position="absolute"
-        justifyContent="flex-end"
-        alignItems="flex-end"
+      <Box
+        h="full"
+        px="4"
+        py="3"
+        bgColor={`${typeColorName}.600`}
+        rounded="xl"
+        cursor="pointer"
+        shadow="base"
+        position="relative"
+        overflow="hidden"
+        _hover={{
+          boxShadow: "xl",
+          transform: "translateY(-2px)",
+        }}
+        _focus={{
+          boxShadow: "outline",
+          transform: "translateY(-2px)",
+        }}
+        style={{
+          WebkitTransition: "box-shadow 250ms, transform 200ms",
+          transition: "box-shadow 250ms, transform 200ms",
+        }}
       >
-        <Image
-          loader={myLoader}
-          // src={`${imageURL}${pokemon.id}.png`}
-          src={`${pokemon.id}.png`}
-          // opacity={{ base: "0.3", md: "0.2", lg: "1" }}
-          // boxSize={{ base: "40", lg: "28" }}
-          layout="intrinsic"
-          width={120}
-          height={120}
-          objectFit="cover"
-        />
-      </Flex>
-      <Box position="relative">
-        <Text
-          mb={-2}
-          fontSize={{ base: "2xl", sm: "xl", md: "2xl" }}
-          fontWeight="bold"
-          color={`${typeColorName}.50`}
-          textTransform="capitalize"
+        <Flex
+          inset="0"
+          position="absolute"
+          justifyContent="flex-end"
+          alignItems="flex-end"
         >
-          {props.alias ? props.alias : pokemon.name.split("-")[0]}
-        </Text>
-        <Text
-          mb={10}
-          fontSize={{ base: "xl", md: "xl" }}
-          fontWeight="bold"
-          color={`${typeColorName}.400`}
-        >
-          #{formatPokemonID(pokemon.id.toString())}
-        </Text>
-        {data.pokemon.types.map((type) => (
-          <Tag
-            key={type.type.name}
-            size="sm"
-            colorScheme={typeColor[type.type.name]}
-            borderRadius="full"
-            mr="1"
-            shadow="base"
+          <Image
+            loader={myLoader}
+            src={`${pokemon.id}.png`}
+            layout="intrinsic"
+            width={120}
+            height={120}
+            objectFit="cover"
+          />
+        </Flex>
+        <Box position="relative">
+          <Text
+            mb={-2}
+            fontSize={{ base: "2xl", sm: "xl", md: "2xl" }}
+            fontWeight="bold"
+            color={`${typeColorName}.50`}
+            textTransform="capitalize"
           >
-            <TagLabel>{type.type.name}</TagLabel>
-          </Tag>
-        ))}
+            {props.alias ? props.alias : pokemon.name.split("-")[0]}
+          </Text>
+          <Text
+            mb={10}
+            fontSize={{ base: "xl", md: "xl" }}
+            fontWeight="bold"
+            color={`${typeColorName}.400`}
+          >
+            #{formatPokemonID(pokemon.id.toString())}
+          </Text>
+          {data.pokemon.types.map((type) => (
+            <Tag
+              key={type.type.name}
+              size="sm"
+              colorScheme={typeColor[type.type.name]}
+              borderRadius="full"
+              mr="1"
+              shadow="base"
+            >
+              <TagLabel>{type.type.name}</TagLabel>
+            </Tag>
+          ))}
+        </Box>
       </Box>
-    </Box>
+    </NextLink>
   );
 }

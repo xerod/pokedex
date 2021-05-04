@@ -28,6 +28,7 @@ import AbilityPanel from "components/PokemonDetail/AbilityPanel";
 import StatsPanel from "components/PokemonDetail/StatsPanel";
 import AboutPanel from "components/PokemonDetail/AboutPanel";
 import Image from "next/image";
+import NextLink from "next/link";
 
 const GET_POKEMON_DETAIL = gql`
   query pokemon($name: String!) {
@@ -133,14 +134,15 @@ const PokemonDetail: React.FC = () => {
   return (
     <DefaultLayout bg={`${typeColorName}.600`}>
       <Flex alignItems="center" color={`${typeColorName}.400`}>
-        <Button
-          variant="link"
-          fontWeight="semibold"
-          colorScheme={typeColorName}
-          onClick={() => router.push("/")}
-        >
-          <HiChevronLeft size={24} /> Home
-        </Button>
+        <NextLink href="/">
+          <Button
+            variant="link"
+            fontWeight="semibold"
+            colorScheme={typeColorName}
+          >
+            <HiChevronLeft size={24} /> Home
+          </Button>
+        </NextLink>
       </Flex>
       <Box mx="10" mt="6">
         <Flex justifyContent="space-between" alignItems="center">
