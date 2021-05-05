@@ -57,12 +57,6 @@ export default function PokemonCard(props: IPokemonCardProps) {
     return null;
   }
 
-  const myLoader = ({ src, width, quality }) => {
-    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${src}?w=${width}&q=${
-      quality || 50
-    }`;
-  };
-
   const typeColorName = typeColor[data.pokemon.types[0].type.name];
   const pokemon = data.pokemon;
   return (
@@ -100,12 +94,11 @@ export default function PokemonCard(props: IPokemonCardProps) {
           alignItems="flex-end"
         >
           <Image
-            loader={myLoader}
-            src={`${pokemon.id}.png`}
-            layout="intrinsic"
+            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
+            quality={2}
             width={120}
             height={120}
-            objectFit="cover"
+            loading="eager"
           />
         </Flex>
         <Box position="relative">
