@@ -11,6 +11,8 @@ import {
   TabPanel,
   Tag,
   TagLabel,
+  Image,
+  Tooltip,
 } from "@chakra-ui/react";
 import { useQuery, gql } from "@apollo/client";
 import DefaultLayout from "components/Layouts/default";
@@ -27,8 +29,9 @@ import React from "react";
 import AbilityPanel from "components/PokemonDetail/AbilityPanel";
 import StatsPanel from "components/PokemonDetail/StatsPanel";
 import AboutPanel from "components/PokemonDetail/AboutPanel";
-import Image from "next/image";
+import NextImage from "next/image";
 import NextLink from "next/link";
+import { motion } from "framer-motion";
 
 const GET_POKEMON_DETAIL = gql`
   query pokemon($name: String!) {
@@ -106,7 +109,7 @@ const PokemonDetail: React.FC = () => {
     setIsCatched(Math.random() > 0.5);
 
     if (isCatched) {
-      const name = prompt("Gotcha! let's give him a name");
+      const name = prompt("GOTCHA! let's give it a name");
       const index = list.findIndex((element) => element.name === name);
       console.log(index);
 
@@ -178,7 +181,7 @@ const PokemonDetail: React.FC = () => {
         ))}
 
         <Flex w="full" justifyContent="center">
-          <Image
+          <NextImage
             loader={myLoader}
             src={`${pokemon.id}.png`}
             layout="intrinsic"
@@ -247,20 +250,34 @@ const PokemonDetail: React.FC = () => {
         </Tabs>
       </Box>
 
-      <Button
-        position="fixed"
-        bottom="0"
-        insetX="0"
-        mx="auto"
-        mb="4"
-        shadow="2xl"
-        size="md"
-        colorScheme="indigo"
-        borderRadius="lg"
+      <motion.img
+        width={50}
+        height={50}
+        drag
+        draggable={true}
+        dragConstraints={{
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+        }}
+        style={{
+          cursor: "grab",
+          position: "fixed",
+          marginLeft: "auto",
+          marginRight: "auto",
+          marginBottom: "1rem",
+          borderRadius: "999px",
+          boxShadow:
+            "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+        onDragTransitionEnd={() => catchPokemon(pokemon)}
         onClick={() => catchPokemon(pokemon)}
-      >
-        Catch {pokemon.name}!
-      </Button>
+        src="/pokeball.svg"
+      />
     </DefaultLayout>
   );
 };

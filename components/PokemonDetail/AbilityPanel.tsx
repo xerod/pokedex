@@ -38,13 +38,17 @@ const AbilityPanel: React.FC<IAbilityPanelProps> = ({ ability }) => {
   const description = data.ability.response.flavor_text_entries[0].flavor_text;
   return (
     <Box p="4" bg="gray.100" mt="4" borderRadius="lg">
-      <Flex mb="2" fontSize="xl" color="gray.500" alignItems="center">
+      <Flex mb="1" fontSize="xl" color="gray.700" alignItems="center">
         <HiOutlineInformationCircle />
         <Text ml="1" fontSize="lg" textTransform="capitalize" fontWeight="bold">
           {ability.replace(/-/g, " ")}
         </Text>
       </Flex>
-      {data && <Text font="gray.800">{description}</Text>}
+      {data && (
+        <Text fontSize="sm" color="gray.600">
+          {description}
+        </Text>
+      )}
     </Box>
   );
 };

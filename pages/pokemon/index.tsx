@@ -3,13 +3,7 @@ import NextLink from "next/link";
 import DefaultLayout from "components/Layouts/default";
 import PokemonCard from "components/PokemonCard";
 import { useEffect, useState } from "react";
-import {
-  HiChevronLeft,
-  HiMinusCircle,
-  HiOutlineLogout,
-  HiOutlineMinusCircle,
-  HiTrash,
-} from "react-icons/hi";
+import { HiChevronLeft, HiOutlineLogout } from "react-icons/hi";
 import { GiLightBackpack } from "react-icons/gi";
 
 const MyPokemon: React.FC = () => {

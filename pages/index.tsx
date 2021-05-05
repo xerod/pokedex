@@ -20,14 +20,13 @@ const GET_POKEMONS = gql`
       results {
         id
         name
-        image
       }
     }
   }
 `;
 
 export default function Home() {
-  const [limit] = useState(20);
+  const [limit] = useState(12);
   const [offset, setOffset] = useState(0);
   const [listItem, setListItem] = useState([]);
   const [noData, setNoData] = useState(false);
@@ -56,7 +55,7 @@ export default function Home() {
     (entries) => {
       const target = entries[0];
       if (target.isIntersecting && data) {
-        setOffset((old) => old + 20);
+        setOffset((old) => old + 12);
       }
     },
     [data]
