@@ -1,14 +1,4 @@
-import { gql, useQuery } from "@apollo/client";
-import {
-  Flex,
-  Box,
-  Text,
-  Grid,
-  Progress,
-  Tag,
-  TagLabel,
-} from "@chakra-ui/react";
-import { Spinner } from "@chakra-ui/spinner";
+import { Flex, Box, Text, Tag, TagLabel } from "@chakra-ui/react";
 import { HiOutlineFire, HiOutlineLightningBolt } from "react-icons/hi";
 
 type IAboutPanelProps = {

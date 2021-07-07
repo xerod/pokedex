@@ -1,7 +1,9 @@
-import { Flex, Box, Text, Skeleton, Tag, TagLabel } from "@chakra-ui/react";
+import { Text, Skeleton, Tag, TagLabel } from "@chakra-ui/react";
+import { Flex, Box } from "@chakra-ui/layout";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client/react/hooks";
+import { gql } from "graphql-tag";
 import typeColor from "utils/typeColor";
 import Image from "next/image";
 import NextLink from "next/link";

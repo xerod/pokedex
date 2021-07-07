@@ -1,7 +1,7 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client/react/hooks";
+import { gql } from "graphql-tag";
 import { Flex, Box, Text } from "@chakra-ui/layout";
 import { SkeletonCircle, SkeletonText } from "@chakra-ui/skeleton";
-import { Spinner } from "@chakra-ui/spinner";
 import { HiOutlineInformationCircle } from "react-icons/hi";
 
 type IAbilityPanelProps = {

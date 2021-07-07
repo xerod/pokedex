@@ -1,8 +1,8 @@
+import { ChakraProvider } from "@chakra-ui/react";
 import {
-  ChakraProvider,
   cookieStorageManager,
   localStorageManager,
-} from "@chakra-ui/react";
+} from "@chakra-ui/color-mode";
 export function Chakra({ cookies, children, theme }) {
   const colorModeManager =
     typeof cookies === "string"

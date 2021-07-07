@@ -9,4 +9,5 @@ const overrides = {
   initialColorMode: "light",
   useSystemColorMode: false,
 };
+
 export default extendTheme(overrides);

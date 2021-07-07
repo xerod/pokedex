@@ -1,18 +1,12 @@
-import {
-  Text,
-  Box,
-  Flex,
-  Grid,
-  GridItem,
-  Spinner,
-  Tag,
-  Button,
-} from "@chakra-ui/react";
-import { useQuery, gql } from "@apollo/client";
-import DefaultLayout from "components/Layouts/default";
-import PokemonCard from "components/PokemonCard";
+import { Text, Spinner, Tag, Button } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem } from "@chakra-ui/layout";
+import { useQuery } from "@apollo/client/react/hooks";
+import { gql } from "graphql-tag";
 import { useCallback, useEffect, useRef, useState } from "react";
 import NextLink from "next/link";
+import dynamic from "next/dynamic";
+const PokemonCard = dynamic(import("components/PokemonCard"));
+const DefaultLayout = dynamic(import("components/Layouts/default"));
 
 const GET_POKEMONS = gql`
   query PokemonList($limit: Int, $offset: Int) {
@@ -118,7 +112,7 @@ export default function Home() {
           mb={6}
         >
           {listItem.map((pokemon) => (
-            <GridItem colSpan={{ base: 2, md: 1 }} key={pokemon.name}>
+            <GridItem colSpan={{ base: 1, md: 1 }} key={pokemon.name}>
               <PokemonCard name={pokemon.name} />
             </GridItem>
           ))}

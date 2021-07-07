@@ -1,7 +1,4 @@
-import { gql, useQuery } from "@apollo/client";
 import { Flex, Box, Text, Grid, Progress } from "@chakra-ui/react";
-import { Spinner } from "@chakra-ui/spinner";
-import { HiOutlineInformationCircle } from "react-icons/hi";
 
 type IStatsPanelProps = {
   color: string;

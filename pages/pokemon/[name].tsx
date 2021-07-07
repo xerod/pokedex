@@ -11,10 +11,10 @@ import {
   TabPanel,
   Tag,
   TagLabel,
-  Image,
-  Tooltip,
 } from "@chakra-ui/react";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react/hooks";
+import { gql } from "graphql-tag";
+
 import DefaultLayout from "components/Layouts/default";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -26,12 +26,14 @@ import {
   HiOutlineLightningBolt,
 } from "react-icons/hi";
 import React from "react";
-import AbilityPanel from "components/PokemonDetail/AbilityPanel";
-import StatsPanel from "components/PokemonDetail/StatsPanel";
-import AboutPanel from "components/PokemonDetail/AboutPanel";
 import NextImage from "next/image";
 import NextLink from "next/link";
 import { motion } from "framer-motion";
+
+import dynamic from "next/dynamic";
+const AbilityPanel = dynamic(import("components/PokemonDetail/AbilityPanel"));
+const StatsPanel = dynamic(import("components/PokemonDetail/StatsPanel"));
+const AboutPanel = dynamic(import("components/PokemonDetail/AboutPanel"));
 
 const GET_POKEMON_DETAIL = gql`
   query pokemon($name: String!) {
